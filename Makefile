@@ -1,6 +1,9 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+PROXY_IMG ?= duizhang/ctrlmesh-proxy:v0.1.0
+MANAGER_IMG ?= duizhang/ctrlmesh-manager:v0.1.0
+INIT_IMG ?= duizhang/ctrlmesh-init:v0.1.0
+OPERATOR_IMG ?= duizhang/demo-operator:v0.1.2
 
 CRD_OPTIONS ?= "crd:crdVersions=v1"
 
@@ -70,11 +73,14 @@ run: manifests generate fmt vet ## Run a controller from your host.
 	go run ./main.go
 
 docker-build: test ## Build docker image with the manager.
-	docker build -t ${IMG} .
+	docker build -t ${MANAGER_IMG} -f artifacts/images/manager.Dockerfile .
+	docker build -t ${PROXY_IMG} -f artifacts/images/proxy.Dockerfile .
+	docker build -t ${INIT_IMG} -f artifacts/images/init.Dockerfile .
 
 docker-push: ## Push docker image with the manager.
-	docker push ${IMG}
-
+	docker push ${MANAGER_IMG}
+	docker push ${PROXY_IMG}
+	docker push ${INIT_IMG}
 ##@ Deployment
 
 install: manifests kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/config.
