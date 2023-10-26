@@ -10,6 +10,8 @@ COPY go.sum go.sum
 
 # Copy the go source
 COPY pkg/ pkg/
+COPY config/ config/
+COPY artifacts/ artifacts/
 COPY vendor/ vendor/
 
 # Build
@@ -37,5 +39,6 @@ RUN set -eux; \
     rm -rf /bin/*
 
 WORKDIR /
+COPY artifacts/scripts/proxy-poststart.sh /poststart.sh
 COPY --from=builder /workspace/ctrlmesh-proxy ./ctrlmesh-proxy
 ENTRYPOINT ["/ctrlmesh-proxy"]
