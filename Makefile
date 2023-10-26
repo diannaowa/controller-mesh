@@ -2,6 +2,7 @@
 # Image URL to use all building/pushing image targets
 PROXY_IMG ?= duizhang/ctrlmesh-proxy:v0.1.0
 MANAGER_IMG ?= duizhang/ctrlmesh-manager:v0.1.0
+OPERATOR_IMG ?= duizhang/demo-operator:v0.1.2
 # Platforms to build the image for
 PLATFORMS ?= linux/amd64,linux/arm64,linux/ppc64le
 
@@ -81,7 +82,9 @@ docker-push: ## Push docker image with the manager.
 docker_proxy:
 	docker build -t $(PROXY_IMG) .
 docker_manager:
-	docker build -t $(MANAGER_IMG) -f Dockerfile_ctl
+	docker build -t $(MANAGER_IMG) -f Dockerfile_ctl .
+docker_demo_operator:
+	docker build -t $(OPERATOR_IMG) -f Dockerfile_demo_operator .
 ##@ Deployment
 
 install: manifests kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/config.
