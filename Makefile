@@ -79,7 +79,7 @@ docker-push: ## Push docker image with the manager.
 
 # Build and push the multiarchitecture docker images and manifest.
 docker:
-	docker build -f ./Dockerfile_multiarch -t $(PROXY_IMG)
+	docker build -t $(PROXY_IMG) .
 ##@ Deployment
 
 install: manifests kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/config.
