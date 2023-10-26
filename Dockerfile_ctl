@@ -13,7 +13,7 @@ COPY pkg/ pkg/
 COPY vendor/ vendor/
 
 # Build
-RUN CGO_ENABLED=0 GO111MODULE=on go build -mod=vendor -a -o ctrlmesh-proxy ./pkg/cmd/proxy/main.go
+RUN CGO_ENABLED=0 GO111MODULE=on go build -mod=vendor -a -o ctrlmesh-manager ./pkg/cmd/manager/main.go
 
 
 ARG BASE_IMAGE
@@ -37,5 +37,5 @@ RUN set -eux; \
     rm -rf /bin/*
 
 WORKDIR /
-COPY --from=builder /workspace/ctrlmesh-proxy ./ctrlmesh-proxy
-ENTRYPOINT ["/ctrlmesh-proxy"]
+COPY --from=builder /workspace/ctrlmesh-manager ./ctrlmesh-manager
+ENTRYPOINT ["/ctrlmesh-manager"]
