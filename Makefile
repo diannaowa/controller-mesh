@@ -81,7 +81,7 @@ docker-push: ## Push docker image with the manager.
 docker_proxy:
 	docker build -t $(PROXY_IMG) .
 docker_manager:
-	docker build -t $(MANAGER_IMG) .
+	docker build -t $(MANAGER_IMG) -f Dockerfile_ctl
 ##@ Deployment
 
 install: manifests kustomize ## Install CRDs into the K8s cluster specified in ~/.kube/config.
